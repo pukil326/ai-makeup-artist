@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebGL 唇色 demo · AI 彩妆</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.20/vision_bundle.mjs"
+        }
+      }
+    </script>
+    <style>
+      #gl {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .gl-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 16px;
+      }
+      .gl-controls label {
+        font-size: 13px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      #opacity {
+        accent-color: var(--accent);
+      }
+      input[type="color"] {
+        width: 36px;
+        height: 28px;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>WebGL 唇色 demo</h1>
+      <p class="tagline">
+        独立验证页 · 唇色搬到 GPU（shader 做 multiply + 跟随光照 + 水光）。
+        主程序 <a href="/" style="color: var(--accent-2)">index.html</a> 不受影响。
+      </p>
+    </header>
+
+    <main class="stage">
+      <div class="viewport">
+        <!-- WebGL 直接渲染相机 + 唇色 -->
+        <canvas id="gl"></canvas>
+      </div>
+
+      <div class="gl-controls">
+        <label>唇浓度 <input id="opacity" type="range" min="0" max="80" value="50" /></label>
+        <label>唇色 <input id="color" type="color" value="#C0506B" /></label>
+        <label>
+          质地
+          <button class="chip active" data-finish="moist">水光</button>
+          <button class="chip" data-finish="matte">哑光</button>
+        </label>
+        <label>粉底 <input id="foundation" type="range" min="0" max="70" value="0" /></label>
+        <label>粉底色 <input id="fnd-shade" type="color" value="#E8C8AE" /></label>
+      </div>
+
+      <div class="controls">
+        <button id="btn-start" class="btn primary">开启摄像头</button>
+        <button id="btn-ai" class="btn accent" disabled>✨ AI 取唇色</button>
+        <button id="btn-bare" class="btn" disabled>🔍 调试遮罩</button>
+      </div>
+      <p id="status" class="status">点「开启摄像头」开始。把浓度拉到 0 即素颜，对比观感。</p>
+    </main>
+
+    <footer class="foot">WebGL2 · 零依赖 · 第一片：嘴唇</footer>
+
+    <script type="module" src="js/webgl/webglMain.js"></script>
+  </body>
+</html>

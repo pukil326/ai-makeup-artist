@@ -1,0 +1,14 @@
+# API Key（本地填写，勿提交）
+.env
+
+# 自签证书（运行时自动生成，含本机私钥，勿提交）
+server/cert.pem
+server/key.pem
+
+# Python
+__pycache__/
+*.pyc
+
+# 系统
+*.Identifier
+.DS_Store
